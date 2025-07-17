@@ -13,13 +13,18 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: npm install && npx playwright install --with-deps
+        run: npm install && npx playwright install --with-deps && plugin/install.sh
 
       - name: Run Playwright tests
         id: run_tests
         continue-on-error: true
         env:
+          GOOGLE_GENERATIVE_AI_API_KEY: ${{ secrets.GOOGLE_GEMINI_API_KEY }}
+          GOOGLE_GENERATIVE_AI_MODEL_NAME: gemini-2.5-flash
+          EMAIL: ${{ vars.EMAIL }}
+          PASSWORD: ${{ secrets.PASSWORD }}
           SELF_HEAL_TESTS_ENABLED: true
+
         run: npx playwright test
 
       - name: Upload Raw Results
