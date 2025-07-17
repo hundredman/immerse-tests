@@ -1,0 +1,13 @@
+{
+    "name": "playwright-tests",
+    "version": "1.0.0",
+    "description": "Playwright-based website tests made with Donobu",
+    "scripts": {
+        "test": "npx playwright test"
+    },
+    "devDependencies": {
+        "donobu": "latest",
+        "playwright": "1.53.2",
+        "@playwright/test": "1.53.2"
+    }
+}

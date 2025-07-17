@@ -1,0 +1,33 @@
+{
+  "name": "donobu-plugin",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Custom tools for use by Donobu.",
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.mjs"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "npm run clean && npm install && tsc -p tsconfig.json && node esbuild.config.mjs"
+  },
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "donobu": "2.27.3",
+    "playwright": "1.53.2",
+    "typescript": "^5.5.0",
+    "esbuild": "^0.25.6"
+  },
+  "peerDependencies": {
+    "donobu": ">=2.27.3",
+    "playwright": ">=1.53.2"
+  },
+  "dependencies": {
+    "zod": "^3.24.1"
+  }
+}
