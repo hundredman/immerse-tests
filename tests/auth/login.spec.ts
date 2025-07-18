@@ -67,4 +67,7 @@ test(title, details, async ({ page }) => {
   await page.waitForTimeout(5000);
   // Asserting that the page shows the text 'Immerse Demo Account' to confirm successful login.
   await expect(page.getByText('Immerse Demo Account')).toBeVisible();
+
+  await page.context().storageState({ path: "login-state.json" });
+
 });
