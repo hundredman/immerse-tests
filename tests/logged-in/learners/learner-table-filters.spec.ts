@@ -1,13 +1,18 @@
-import { test, expect } from 'donobu';
+/**
+ * Note that this test uses tools that require the usage of an LLM, so be
+ * sure to have an appropriate LLM API key available. This can be done
+ * by providing an environment variable (e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY,
+ * or GOOGLE_GENERATIVE_AI_API_KEY) or by configuring a flow runner using
+ * the Donobu app.
+ */
+import { test } from 'donobu';
 
 const title = 'learner-table-filters';
 const details = {
-  annotation: [
-    {
-      type: 'objective',
-      description: `Go to learners tab. Edit Column/Filters. Uncheck emails. Scroll down on the modal and Save. Verify that the email column is no longer visible on the table.`,
-    },
-  ],
+  annotation: {
+    type: 'objective',
+    description: `Go to learners tab. Edit Column/Filters. Uncheck emails. Scroll down on the modal and Save. Verify that the email column is no longer visible on the table.`,
+  },
 };
 test(title, details, async ({ page }) => {
   // Initializing web navigation.
@@ -47,7 +52,7 @@ test(title, details, async ({ page }) => {
     selector: {
       element: [
         '#mantine-r2t',
-        'html > body > div:nth-of-type(7) > div > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(1) > input',
+        'html > body > div:nth-of-type(6) > div > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(1) > input',
         'div > input:nth-of-type(1)',
         'input',
         'div > :nth-child(1)',
@@ -68,7 +73,7 @@ test(title, details, async ({ page }) => {
     selector: {
       element: [
         "//button[normalize-space(.)='Save']",
-        'html > body > div:nth-of-type(7) > div > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > button:nth-of-type(3)',
+        'html > body > div:nth-of-type(6) > div > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > button:nth-of-type(3)',
         'div > button:nth-of-type(3)',
         'div > :nth-child(3)',
         "[data-button='true']",
@@ -78,8 +83,9 @@ test(title, details, async ({ page }) => {
       frame: null,
     },
   });
-  // Verifying that the email column is no longer visible on the table after unchecking the email checkbox and saving the changes.
-  await expect(page.locator('body')).toContainText(/Email/);
-  // Verifying that the email column is no longer visible on the table after unchecking the email checkbox and saving the changes.
-  await expect(page.locator('body')).toContainText(/Email/);
+  // Verifying that the email column header is no longer visible on the table after unchecking the email checkbox and saving the changes, aligning with the overall objective's intent.
+  await page.visuallyAssert({
+    assertionToTestFor:
+      'Assert that the table headers do not contain the text "Email".',
+  });
 });
