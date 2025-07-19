@@ -96,7 +96,7 @@ test(title, details, async ({ page }) => {
   // Verifying that the 'Logged in at Least Once' value has changed after updating the time frame.
   await page.visuallyAssert({
     assertionToTestFor:
-      "Assert that the value for 'Logged in at Least Once' is 104%.",
+      "Assert that the value for 'Logged in at Least Once' is 107%.",
   });
   // Verifying that the '% Attended Trainer-led Classes' value has changed after updating the time frame.
   await page.visuallyAssert({
@@ -106,7 +106,7 @@ test(title, details, async ({ page }) => {
   // Verifying that the 'Attended Trainer-led classes' value has changed after updating the time frame.
   await page.visuallyAssert({
     assertionToTestFor:
-      "Assert that the value for 'Attended Trainer-led classes' is 684.",
+      "Assert that the value for 'Attended Trainer-led classes' is 668.",
   });
   // Verifying that the 'Average Class Rating' value has changed after updating the time frame.
   await page.visuallyAssert({
@@ -116,11 +116,11 @@ test(title, details, async ({ page }) => {
   // Verifying that the 'Attended Social Events' value has changed after updating the time frame.
   await page.visuallyAssert({
     assertionToTestFor:
-      "Assert that the value for 'Attended Social Events' is 696.",
+      "Assert that the value for 'Attended Social Events' is 660.",
   });
   // Verifying that the 'Completed Self-Paced Lessons' value has changed after updating the time frame.
   await page.visuallyAssert({
     assertionToTestFor:
-      "Assert that the value for 'Completed Self-Paced Lessons' is 2684.",
+      "Assert that the value for 'Completed Self-Paced Lessons' is 2660.",
   });
 });

@@ -6,8 +6,8 @@
         "test": "npx playwright test"
     },
     "devDependencies": {
-        "donobu": "latest",
-        "playwright": "1.53.2",
-        "@playwright/test": "1.53.2"
+        "@playwright/test": "1.53.2",
+        "donobu": "^2.29.1",
+        "playwright": "1.53.2"
     }
 }
