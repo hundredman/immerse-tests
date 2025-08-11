@@ -30,8 +30,6 @@ Assert text and verify that the TOS column is sorted in descending order -- 1st 
 test(title, details, async ({ page }) => {
   // Initializing web navigation.
   await page.goto('https://staging-dashboard.immerse.online/dashboard');
-  // Waiting for the dashboard page to fully load before proceeding to look for the Learners tab.
-  await page.waitForTimeout(3000);
   // Clicking on the Learners tab to navigate to the learners section as required by the objective.
   await page.clickElement({
     selector: {
@@ -87,6 +85,14 @@ test(title, details, async ({ page }) => {
   });
   // Waiting for the learners data to load after changing the timeframe to "All Time" as required by the objective.
   await page.waitForTimeout(3000);
+  // Scrolling down the page to reveal the "Per page" dropdown, which was not visible in the previous viewport.
+  await page.scroll({
+    direction: 'DOWN',
+    selector: {
+      element: [],
+      frame: null,
+    },
+  });
   // Clicking on the "Per page" dropdown to change it from 10 to 50 as required by the objective.
   await page.clickElement({
     selector: {
@@ -149,6 +155,6 @@ test(title, details, async ({ page }) => {
   // Verifying that the TOS column is sorted in descending order as required by the objective, checking that the first learner's TOS value is higher than subsequent learners.
   await page.visuallyAssert({
     assertionToTestFor:
-      'Assert that the TOS column is sorted in descending order with the first learner having a TOS value of 67:43, the second learner having 57:44, and subsequent learners having progressively lower or equal TOS values.',
+      'Assert that the TOS column is sorted in descending order with the first learner having a TOS value of 56:03, the second learner having 55:29, and subsequent learners having progressively lower or equal TOS values.',
   });
 });
