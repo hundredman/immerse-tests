@@ -26,13 +26,16 @@ test(title, details, async ({ page }) => {
   await page.clickElement({
     selector: {
       element: [
-        "//button[normalize-space(.)='Learners']",
-        'div > button:nth-of-type(2)',
-        'html > body > div:nth-of-type(1) > div > div > div:nth-of-type(1) > div > div:nth-of-type(1) > button:nth-of-type(2)',
+        '#__next > div > div > div:nth-of-type(1) > div > div:nth-of-type(1) > button:nth-of-type(2)',
+        ".//button[normalize-space(.)='Learners']",
+        'div.mantine-xg7kom > button:nth-of-type(2)',
+        'div.mantine-yx7xue > div:nth-of-type(1) > button:nth-of-type(2)',
+        'div.mantine-2pm4e4 > div > div:nth-of-type(1) > button:nth-of-type(2)',
+        'div.mantine-le2skq > div:nth-of-type(1) > div > div:nth-of-type(1) > button:nth-of-type(2)',
+        'div.c-ejwOqd > div > div:nth-of-type(1) > div > div:nth-of-type(1) > button:nth-of-type(2)',
+        'body > div:nth-of-type(1) > div > div > div:nth-of-type(1) > div > div:nth-of-type(1) > button:nth-of-type(2)',
         "[data-button='true']",
-        "button[data-button='true']",
-        'button',
-        'div > :nth-child(3)',
+        'button.mantine-UnstyledButton-root',
       ],
       frame: null,
     },
@@ -41,13 +44,16 @@ test(title, details, async ({ page }) => {
   await page.clickElement({
     selector: {
       element: [
-        "//button[normalize-space(.)='Edit Columns/Filters']",
-        'div > button:nth-of-type(3)',
-        'html > body > div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(3)',
-        'div > :nth-child(4)',
+        '#__next > div > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(3)',
+        ".//button[normalize-space(.)='Edit Columns/Filters']",
+        'div.mantine-1rlbqtv > div:nth-of-type(1) > button:nth-of-type(3)',
+        'div.mantine-1hv2vg > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(3)',
+        'div.mantine-1ywgif7 > div > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(3)',
+        'div.mantine-le2skq > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(3)',
+        'div.c-ejwOqd > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(3)',
+        'body > div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(3)',
         "[data-button='true']",
-        "button[data-button='true']",
-        'button',
+        'button.mantine-UnstyledButton-root',
       ],
       frame: null,
     },
@@ -56,11 +62,13 @@ test(title, details, async ({ page }) => {
   await page.clickElement({
     selector: {
       element: [
-        '#mantine-rn',
-        'html > body > div:nth-of-type(6) > div > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(1) > input',
-        'div > input:nth-of-type(1)',
-        'input',
-        'div > :nth-child(1)',
+        '#mantine-r2t',
+        '#mantine-ri-body > div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(1) > input',
+        'div:nth-of-type(2) > div > div > div:nth-of-type(1) > input.mantine-1137jyz',
+        'div.mantine-nmgv2p > div:nth-of-type(2) > div > div > div:nth-of-type(1) > input',
+        "[role='dialog'] > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(1) > input",
+        'body > div:nth-of-type(6) > div > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(1) > input',
+        'input.mantine-1137jyz',
       ],
       frame: null,
     },
@@ -68,22 +76,42 @@ test(title, details, async ({ page }) => {
   // Scrolling down the modal to reveal the 'Save' button.
   await page.scroll({
     direction: 'DOWN',
+    selector: {
+      element: [
+        '#mantine-ri > div:nth-of-type(2)',
+        "[role='presentation']",
+        'div.mantine-144aj37',
+        'body > div:nth-of-type(6) > div > div > div:nth-of-type(2)',
+      ],
+      frame: null,
+    },
   });
   // Scrolling down the modal to reveal the 'Save' button.
   await page.scroll({
     direction: 'DOWN',
+    selector: {
+      element: [
+        '#mantine-ri > div:nth-of-type(2)',
+        "[role='presentation']",
+        'div.mantine-144aj37',
+        'body > div:nth-of-type(6) > div > div > div:nth-of-type(2)',
+      ],
+      frame: null,
+    },
   });
   // Clicking the 'Save' button to apply the changes to the column visibility.
   await page.clickElement({
     selector: {
       element: [
-        "//button[normalize-space(.)='Save']",
-        'html > body > div:nth-of-type(6) > div > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > button:nth-of-type(3)',
-        'div > button:nth-of-type(3)',
-        'div > :nth-child(3)',
+        '#mantine-ri-body > div:nth-of-type(2) > button:nth-of-type(3)',
+        '#mantine-ri > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > button:nth-of-type(3)',
+        ".//button[normalize-space(.)='Save']",
+        'div.mantine-gwpqz3 > button:nth-of-type(3)',
+        "[role='dialog'] > div:nth-of-type(2) > div:nth-of-type(2) > button:nth-of-type(3)",
+        "[role='presentation'] > div > div:nth-of-type(2) > div:nth-of-type(2) > button:nth-of-type(3)",
+        'body > div:nth-of-type(6) > div > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > button:nth-of-type(3)',
         "[data-button='true']",
-        "button[data-button='true']",
-        'button',
+        'button.mantine-UnstyledButton-root',
       ],
       frame: null,
     },
