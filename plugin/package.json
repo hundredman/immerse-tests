@@ -18,13 +18,13 @@
   },
   "license": "UNLICENSED",
   "devDependencies": {
-    "donobu": "2.27.3",
+    "donobu": "2.37.1",
     "playwright": "1.53.2",
     "typescript": "^5.5.0",
     "esbuild": "^0.25.6"
   },
   "peerDependencies": {
-    "donobu": ">=2.27.3",
+    "donobu": ">=2.37.0",
     "playwright": ">=1.53.2"
   },
   "dependencies": {
