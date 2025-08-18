@@ -89,7 +89,7 @@ test(title, details, async ({ page }) => {
   await page.scroll({
     direction: 'DOWN',
     selector: {
-      element: ['html'],
+      element: [],
       frame: null,
     },
   });
