@@ -156,6 +156,8 @@ test(title, details, async ({ page }) => {
       frame: null,
     },
   });
+  // Waiting for the learners' data to load after sorting by TOS (HH:MM).
+  await page.waitForTimeout(5000);
   // Asserting that the 'TOS (HH:MM)' column is sorted in descending order as per the objective.
   await page.visuallyAssert({
     assertionToTestFor:
