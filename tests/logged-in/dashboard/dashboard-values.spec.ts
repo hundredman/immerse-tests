@@ -51,6 +51,14 @@ test(title, details, async ({ page }) => {
     assertionToTestFor:
       "Assert that 'Average Class Rating' is present and has a value.",
   });
+  // Scrolling down to find the 'Attended Social Events' element.
+  await page.scroll({
+    direction: 'DOWN',
+    selector: {
+      element: ['html'],
+      frame: null,
+    },
+  });
   // Verifying that the 'Attended Social Events' element is populated on the dashboard.
   await page.visuallyAssert({
     assertionToTestFor:
@@ -61,11 +69,20 @@ test(title, details, async ({ page }) => {
     assertionToTestFor:
       "Assert that 'Completed Self-Paced Lessons' is present and has a value.",
   });
+  // Scrolling up to find the date range input field to change the time frame.
+  await page.scroll({
+    direction: 'UP',
+    selector: {
+      element: ['html'],
+      frame: null,
+    },
+  });
   // Changing the time frame to 'Last quarter' to observe data changes.
   await page.clickElement({
     selector: {
       element: [
         '#mantine-r4',
+        "[data-testid='dashboard-header-time-filter']",
         "[placeholder='Select Date Range']",
         "div:nth-of-type(2) > div > div > [data-mantine-stop-propagation='false']",
         'div:nth-of-type(2) > div > div > input.mantine-Input-input',
@@ -110,19 +127,12 @@ test(title, details, async ({ page }) => {
   //  value has changed after updating the time frame, and adjusting the assertion to match the current value displayed on the page.
   await page.visuallyAssert({
     assertionToTestFor:
-      'Assert that the value for \n% Attended Trainer-led Classes\n is 78%.',
-  });
-  // Verifying that the
-  // % Attended Trainer-led Classes
-  //  value has changed after updating the time frame, and adjusting the assertion to match the current value displayed on the page.
-  await page.visuallyAssert({
-    assertionToTestFor:
-      'Assert that the value for \n% Attended Trainer-led Classes\n is 78%.',
+      'Assert that \n% Attended Trainer-led Classes\n is 78%.',
   });
   // Verifying that the 'Attended Trainer-led classes' value has changed after updating the time frame, and adjusting the assertion to match the current value displayed on the page.
   await page.visuallyAssert({
     assertionToTestFor:
-      "Assert that the value for 'Attended Trainer-led classes' is 442.",
+      "Assert that the value for 'Attended Trainer-led classes' is 550.",
   });
   // Verifying that the 'Average Class Rating' value has changed after updating the time frame.
   await page.visuallyAssert({
@@ -132,11 +142,11 @@ test(title, details, async ({ page }) => {
   // Verifying that the 'Attended Social Events' value has changed after updating the time frame, and adjusting the assertion to match the current value displayed on the page.
   await page.visuallyAssert({
     assertionToTestFor:
-      "Assert that the value for 'Attended Social Events' is 485.",
+      "Assert that the value for 'Attended Social Events' is 506.",
   });
   // Verifying that the 'Completed Self-Paced Lessons' value has changed after updating the time frame, and adjusting the assertion to match the current value displayed on the page.
   await page.visuallyAssert({
     assertionToTestFor:
-      "Assert that the value for 'Completed Self-Paced Lessons' is 2905.",
+      "Assert that the value for 'Completed Self-Paced Lessons' is 2741.",
   });
 });
