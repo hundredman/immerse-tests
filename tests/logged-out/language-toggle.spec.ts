@@ -21,13 +21,7 @@ test(title, details, async ({ page }) => {
   await page.clickElement({
     selector: {
       element: [
-        "[aria-label='Display\\ Language']",
-        'html > body > div:nth-of-type(1) > div:nth-of-type(1) > div > div > div:nth-of-type(1) > div:nth-of-type(2)',
-        '#mantine-r0-target',
-        "//div[normalize-space(.)='ENGLISH']",
-        'div > div:nth-of-type(2)',
-        'div > :nth-child(2)',
-        'div',
+        "[aria-label='YOLO Display\\ Language']",
       ],
       frame: null,
     },
@@ -36,13 +30,7 @@ test(title, details, async ({ page }) => {
   await page.clickElement({
     selector: {
       element: [
-        "//button[normalize-space(.)='Japanese']",
-        'div > button:nth-of-type(2)',
-        'html > body > div:nth-of-type(1) > div:nth-of-type(1) > div > div > div:nth-of-type(1) > div:nth-of-type(3) > div > button:nth-of-type(2)',
-        "[data-menu-item='true']",
-        "button[data-menu-item='true']",
-        'div > :nth-child(2)',
-        'button',
+        "//button[normalize-space(.)='Korean']",
       ],
       frame: null,
     },
