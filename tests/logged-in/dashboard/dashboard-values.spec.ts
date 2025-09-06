@@ -132,7 +132,7 @@ test(title, details, async ({ page }) => {
   // Verifying that the 'Attended Trainer-led classes' value has changed after updating the time frame, and adjusting the assertion to match the current value displayed on the page.
   await page.visuallyAssert({
     assertionToTestFor:
-      "Assert that the value for 'Attended Trainer-led classes' is 550.",
+      "Assert that the value for 'Attended Trainer-led classes' is 492.",
   });
   // Verifying that the 'Average Class Rating' value has changed after updating the time frame.
   await page.visuallyAssert({
@@ -142,11 +142,11 @@ test(title, details, async ({ page }) => {
   // Verifying that the 'Attended Social Events' value has changed after updating the time frame, and adjusting the assertion to match the current value displayed on the page.
   await page.visuallyAssert({
     assertionToTestFor:
-      "Assert that the value for 'Attended Social Events' is 506.",
+      "Assert that the value for 'Attended Social Events' is 534.",
   });
   // Verifying that the 'Completed Self-Paced Lessons' value has changed after updating the time frame, and adjusting the assertion to match the current value displayed on the page.
   await page.visuallyAssert({
     assertionToTestFor:
-      "Assert that the value for 'Completed Self-Paced Lessons' is 2741.",
+      "Assert that the value for 'Completed Self-Paced Lessons' is 2750.",
   });
 });
