@@ -96,8 +96,10 @@ test(title, details, async ({ page }) => {
     })
     .click();
   // Verifying that the language on the Learners page has been successfully swapped to Spanish by checking for key Spanish phrases.
-  await expect(page.getByText('Estudiantes')).toBeVisible();
+  await expect(page.getByText('Estudiantes').first()).toBeVisible();
   // Navigating to the Learner details page to verify language swap.
+  // Waiting for the table rows to load completely before verifying the language.
+  await page.waitForTimeout(4000);
   await page
     .find("[data-testid='learners-table-row-227768']", {
       failover: [
@@ -112,8 +114,10 @@ test(title, details, async ({ page }) => {
       ],
     })
     .click();
+  // Waiting for the Learner details page to load completely before verifying the language.
+  await page.waitForTimeout(2000);
   // Verifying that the language on the Learner details page has been successfully swapped to Spanish by checking for a key Spanish phrase.
-  await expect(page.getByText('Última actividad')).toBeVisible();
+  await expect(page.getByText('Última actividad').first()).toBeVisible();
   // Closing the learner details drawer to access other elements on the Learners page.
   await page
     .find(
@@ -189,9 +193,9 @@ test(title, details, async ({ page }) => {
     })
     .click();
   // Verifying that the language on the Filters page has been successfully swapped to Spanish by checking for the 'Ubicación' heading.
-  await expect(page.getByText('Ubicación')).toBeVisible();
+  await expect(page.getByText('Ubicación').first()).toBeVisible();
   // Verifying that the language on the Filters page has been successfully swapped to Spanish by checking for the 'Nivel inicial' heading.
-  await expect(page.getByText('Nivel inicial')).toBeVisible();
+  await expect(page.getByText('Nivel inicial').first()).toBeVisible();
   // Closing the filters drawer to access the 'Edit Columns/Filters' button.
   await page
     .find('div.mantine-w29q45 > button > svg', {
@@ -218,11 +222,11 @@ test(title, details, async ({ page }) => {
     })
     .click();
   // Verifying that the language on the 'Edit Columns/Filters' modal has been successfully swapped to Spanish by checking for the 'Nombre' heading.
-  await expect(page.getByText('Nombre')).toBeVisible();
+  await expect(page.getByText('Nombre').first()).toBeVisible();
   // Verifying that the language on the 'Edit Columns/Filters' modal has been successfully swapped to Spanish by checking for the 'Correo Electrónico' heading.
-  await expect(page.getByText('Correo Electrónico')).toBeVisible();
+  await expect(page.getByText('Correo Electrónico').first()).toBeVisible();
   // Verifying that the language on the 'Edit Columns/Filters' modal has been successfully swapped to Spanish by checking for the 'Ubicación' heading.
-  await expect(page.getByText('Ubicación')).toBeVisible();
+  await expect(page.getByText('Ubicación').first()).toBeVisible();
   // Scrolling down the 'Edit Columns/Filters' modal to reveal more content and verify additional language swaps.
   await page
     .find("[role='presentation']", {
@@ -234,11 +238,11 @@ test(title, details, async ({ page }) => {
     })
     .scroll('DOWN');
   // Verifying that the language on the 'Edit Columns/Filters' modal has been successfully swapped to Spanish by checking for the 'Último Inicio De Sesión' heading.
-  await expect(page.getByText('Último Inicio De Sesión')).toBeVisible();
+  await expect(page.getByText('Último Inicio De Sesión').first()).toBeVisible();
   // Verifying that the language on the 'Edit Columns/Filters' modal has been successfully swapped to Spanish by checking for the 'Encargado' heading.
-  await expect(page.getByText('Encargado')).toBeVisible();
+  await expect(page.getByText('Encargado').first()).toBeVisible();
   // Verifying that the language on the 'Edit Columns/Filters' modal has been successfully swapped to Spanish by checking for the 'Estado' heading.
-  await expect(page.getByText('Estado')).toBeVisible();
+  await expect(page.getByText('Estado').first()).toBeVisible();
   // Closing the 'Edit Columns/Filters' modal after verifying language swap.
   await page
     .find("[data-testid='learners-button-save']", {
