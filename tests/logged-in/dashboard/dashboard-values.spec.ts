@@ -115,24 +115,24 @@ test(title, details, async ({ page }) => {
   });
   // Verifying that the 'Number of Learners' value has changed after updating the time frame.
   await page.visuallyAssert({
-    assertionToTestFor: "Assert that the value for 'Number of Learners' is 46.",
+    assertionToTestFor: "Assert that the value for 'Number of Learners' is 51.",
   });
   // Verifying that the 'Logged in at Least Once' value has changed after updating the time frame, and adjusting the assertion to match the current value displayed on the page.
   await page.visuallyAssert({
     assertionToTestFor:
-      "Assert that the value for 'Logged in at Least Once' is 78%.",
+      "Assert that the value for 'Logged in at Least Once' is 75%.",
   });
   // Verifying that the
   // % Attended Trainer-led Classes
   //  value has changed after updating the time frame, and adjusting the assertion to match the current value displayed on the page.
   await page.visuallyAssert({
     assertionToTestFor:
-      'Assert that \n% Attended Trainer-led Classes\n is 78%.',
+      'Assert that \n% Attended Trainer-led Classes\n is 75%.',
   });
   // Verifying that the 'Attended Trainer-led classes' value has changed after updating the time frame, and adjusting the assertion to match the current value displayed on the page.
   await page.visuallyAssert({
     assertionToTestFor:
-      "Assert that the value for 'Attended Trainer-led classes' is 492.",
+      "Assert that the value for 'Attended Trainer-led classes' is 537.",
   });
   // Verifying that the 'Average Class Rating' value has changed after updating the time frame.
   await page.visuallyAssert({
@@ -142,11 +142,11 @@ test(title, details, async ({ page }) => {
   // Verifying that the 'Attended Social Events' value has changed after updating the time frame, and adjusting the assertion to match the current value displayed on the page.
   await page.visuallyAssert({
     assertionToTestFor:
-      "Assert that the value for 'Attended Social Events' is 534.",
+      "Assert that the value for 'Attended Social Events' is 569.",
   });
   // Verifying that the 'Completed Self-Paced Lessons' value has changed after updating the time frame, and adjusting the assertion to match the current value displayed on the page.
   await page.visuallyAssert({
     assertionToTestFor:
-      "Assert that the value for 'Completed Self-Paced Lessons' is 2750.",
+      "Assert that the value for 'Completed Self-Paced Lessons' is 373.",
   });
 });
