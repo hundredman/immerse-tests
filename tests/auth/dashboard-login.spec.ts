@@ -14,8 +14,8 @@ Verify user lands on Dashboard home page by asserting the words "Learning Summar
   ],
 };
 test(title, details, async ({ page }) => {
-  // Initializing web navigation.
-  await page.goto('https://staging-dashboard.immerse.online');
+  // Navigate to the URL and wait for the network to become idle.
+  await page.goto('https://staging-dashboard.immerse.online', { waitUntil: 'networkidle' });
   // Entering the email address as specified in the objective to log in to the b2b dashboard.
   await page.inputText({
     text: 'sample.hradmin.readonly.6@immerse.online',
