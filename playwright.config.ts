@@ -67,7 +67,7 @@ export default defineConfig({
       testMatch: "tests/logged-out/**/*.spec.ts",
     },
   ],
-  timeout: 90000, // 90 seconds timeout for each test to give enough time for LLM API calls for smart assertions
+  timeout: 360000, // 360 seconds timeout for each test to give enough time for LLM API calls for smart assertions
   use: {
     screenshot: "on",
     video: "on",
