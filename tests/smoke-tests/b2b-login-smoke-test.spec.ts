@@ -142,8 +142,10 @@ test(title, details, async ({ page }) => {
     })
     .click();
   // Waiting for the login process to complete and the page to redirect to the dashboard after clicking the Login button.
-  await page.waitForTimeout(3000);
+  await page.waitForURL('**/dashboard**', { timeout: 90000 });
   // Asserting that the user has landed on the Dashboard home page and that the words "Learning Summary" are displayed on the page.
+  const learnerSummaryEle = await page.getByText('Learning Summary');
+  await learnerSummaryEle.waitFor({ state: 'visible', timeout: 90000 });
   await expect(page.getByText('Learning Summary')).toBeVisible();
   // Saving the browser storage state to a file for future use in tests.
   await page.context().storageState({ path: "b2b-login-state.json" });
