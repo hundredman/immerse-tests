@@ -173,9 +173,10 @@ test(title, details, async ({ page }) => {
   // Verifying that the Learner Detail Tray opens successfully by asserting for the presence of the close button, which indicates the tray is visible.
   await expect(page.locator('button.mantine-Drawer-closeButton')).toBeVisible();
   // Waiting for the Learner Detail Tray to load and display the learner's full name and contract or role details in the header.
-  await page.getByText(`${learnerTableData.name}`).waitFor({ state: 'visible', timeout: 30000 });
-  await page.getByText(`${learnerTableData.email}`).waitFor({ state: 'visible', timeout: 30000 });
-  await page.getByText(`${learnerTableData.tosValue}`).waitFor({ state: 'visible', timeout: 30000 });
+  const drawerModal = page.locator('div.mantine-Drawer-drawer');
+  await drawerModal.getByText(`${learnerTableData.name}`).waitFor({ state: 'visible', timeout: 30000 });
+  await drawerModal.getByText(`${learnerTableData.email}`).waitFor({ state: 'visible', timeout: 30000 });
+  await drawerModal.getByText(`${learnerTableData.tosValue}`).waitFor({ state: 'visible', timeout: 30000 });
   // Waiting for the Learner Detail Tray to fully load and display content by asserting for the presence of the 'Lifetime Total (HH:MM)' label.
   await page.getByText("Lifetime Total (HH:MM)").waitFor({ state: 'visible', timeout: 30000 });
   // Scrolling down the Learner Detail Tray to check all expected fields and labels.
