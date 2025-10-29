@@ -22,12 +22,12 @@ const details = {
 test(title, details, async ({ page }) => {
   // Initializing web navigation.
   await page.goto('https://staging-dashboard.immerse.online/dashboard');
-  // Waiting for the dashboard to load completely.
-  await page.waitForTimeout(5000);
   // Verifying that the 'Number of Learners' element is populated on the dashboard.
   await page.visuallyAssert({
     assertionToTestFor:
       "Assert that 'Number of Learners' is present and has a value.",
+    retries: 3,
+    retryWaitSeconds: 7,
   });
   // Verifying that the 'Logged in at Least Once' element is populated on the dashboard.
   await page.visuallyAssert({

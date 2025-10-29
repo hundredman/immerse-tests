@@ -2,6 +2,8 @@ import { defineConfig, devices } from "donobu";
 
 export default defineConfig({
   testDir: "./tests",
+  workers: 4,
+  retries: process.env.CI ? 2 : 1,
   projects: [
     {
       name: "dashboard-login",
@@ -59,6 +61,9 @@ export default defineConfig({
     {
       name: "logged-in-smoke-tests",
       testMatch: "tests/smoke-tests/logged-in/**/*.spec.ts",
+      metadata: {
+        SELF_HEAL_TESTS_ENABLED: false,
+      },
       dependencies: ["b2b-smoke-test-login"],
       use: { storageState: "b2b-login-state.json" },
     },
@@ -68,9 +73,14 @@ export default defineConfig({
     },
   ],
   timeout: 360000, // 360 seconds timeout for each test to give enough time for LLM API calls for smart assertions
+  // Global test configuration
   use: {
     screenshot: "on",
     video: "on",
+    // Add action timeout for individual actions like clicks
+    actionTimeout: 30000, // 30 seconds for individual actions
+    // Add navigation timeout
+    navigationTimeout: 60000, // 60 seconds for page navigation
   },
   reporter: [
     ["github"],

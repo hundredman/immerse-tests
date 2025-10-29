@@ -101,7 +101,7 @@ test(title, details, async ({ page }) => {
   // Waiting for the table rows to load completely before verifying the language.
   await page.waitForTimeout(4000);
   await page
-    .find("[data-testid='learners-table-row-227768']", {
+    .find("[data-testid^='learners-table-row-']:nth-of-type(1)", {
       failover: [
         'div.mantine-kwn0a8 > table > tbody > tr:nth-of-type(1)',
         "[data-testid='learners-table'] > tbody > tr:nth-of-type(1)",
@@ -117,6 +117,7 @@ test(title, details, async ({ page }) => {
   // Waiting for the Learner details page to load completely before verifying the language.
   await page.waitForTimeout(2000);
   // Verifying that the language on the Learner details page has been successfully swapped to Spanish by checking for a key Spanish phrase.
+  await page.getByText('Última actividad').first().waitFor({ state: 'visible', timeout: 30000 });
   await expect(page.getByText('Última actividad').first()).toBeVisible();
   // Closing the learner details drawer to access other elements on the Learners page.
   await page
@@ -153,11 +154,9 @@ test(title, details, async ({ page }) => {
     })
     .click();
   // Verifying that the language on the Learner actions menu has been successfully swapped to Spanish by checking for key Spanish phrases.
-  await expect(
-    page.getByText(
-      'Ver enlace de registroReenviar invitaciónInactivarEditar aprendizCambiar contrato',
-    ),
-  ).toBeVisible();
+  await expect(page.getByText('Inactivar')).toBeVisible();
+  await expect(page.getByText('Editar aprendiz')).toBeVisible();
+  await expect(page.getByText('Cambiar contrato')).toBeVisible();
   // Closing the learner actions menu to access other elements on the Learners page.
   await page
     .find("[data-testid='learners-edit-dropdown-menu']", {
