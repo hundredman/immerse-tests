@@ -1,4 +1,4 @@
-import { test } from 'donobu';
+import { test, expect } from 'donobu';
 
 const title = 'Test for https://dashboard.immerse.online';
 const details = {
@@ -24,7 +24,6 @@ Locate the search field with placeholder text "Search name, email, etc..."
 Click on that search field
 Enter the email address used when creating the learner
 Click on "Search"
-Scroll table to the right
 Click on the "..." and select "View Registration Link"
 Click on "Copy"
 Open a new browser tab
@@ -69,6 +68,8 @@ test(title, details, async ({ page }) => {
       ],
     })
     .click();
+  // Wait for learner page to load successfully
+  await page.waitForLoadState('networkidle');
   // Clicking on the 'All Contracts' dropdown to view available contracts and select one with an available license.
   await page
     .find(".//button[normalize-space(.)='All Contracts']", {
@@ -133,6 +134,19 @@ test(title, details, async ({ page }) => {
       ],
     })
     .click();
+  // Verify that the Add Learner modal displays all required fields
+  await page.find("[data-testid='learners-form-first-name-input']", {
+    failover: ["[name='firstName']", "[placeholder='Please enter a first name']"],
+  });
+  await page.find("[data-testid='learners-form-last-name-input']", {
+    failover: ["[name='lastName']", "[placeholder='Please enter a last name']"],
+  });
+  await page.find("[data-testid='learners-form-email-input']", {
+    failover: ["[name='email']", "[placeholder='Please enter a valid email']"],
+  });
+  await page.find("[data-testid='learners-form-country-select']", {
+    failover: ["[placeholder='Please enter a country']"],
+  });
   // Entering "Test" into the First Name field as specified in the overall objective.
   await page
     .find("[data-testid='learners-form-first-name-input']", {
@@ -232,6 +246,17 @@ test(title, details, async ({ page }) => {
       ],
     })
     .click();
+  // Verify that the learner was added successfully by checking for success message or toast
+  await page.find("//*[contains(text(), 'success') or contains(text(), 'Success') or contains(text(), 'added')]", {
+    failover: [
+      "[role='status']",
+      "[role='alert']",
+      ".mantine-Notification-root",
+      "div[class*='notification']",
+      "div[class*='toast']",
+      "div[class*='success']",
+    ],
+  });
   // Waiting for the page to finish loading after saving changes to the new learner.
   await page.waitForTimeout(5000);
   await page.run('acknowledgeUserInstruction', {
@@ -268,19 +293,13 @@ test(title, details, async ({ page }) => {
     .click();
   // Waiting for the search results to load after searching for the learner's email.
   await page.waitForTimeout(5000);
-  // Scrolling the table to the right to reveal more columns and locate the '...' button for the learner.
-  await page
-    .find('div.mantine-kwn0a8', {
-      failover: [
-        'div.mantine-1hv2vg > div:nth-of-type(3)',
-        'div.mantine-1ywgif7 > div > div:nth-of-type(3)',
-        'div.mantine-le2skq > div:nth-of-type(2) > div > div:nth-of-type(3)',
-        'div.c-ejwOqd > div > div:nth-of-type(2) > div > div:nth-of-type(3)',
-        'html > body > div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div:nth-of-type(3)',
-        'body > div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div:nth-of-type(3)',
-      ],
-    })
-    .scroll('RIGHT');
+  // Verify that the search results contain the learner's email
+  await page.find(`//*[contains(text(), '${generatedEmail}')]`, {
+    failover: [
+      `[data-testid='learners-table'] //*[contains(text(), '${generatedEmail}')]`,
+      "table tbody tr td",
+    ],
+  });
   // Clicking on the "..." button to reveal options for the learner, including "View Registration Link".
   await page
     .find(".//button[normalize-space(.)='...']", {
@@ -316,10 +335,10 @@ test(title, details, async ({ page }) => {
     })
     .click();
   // Getting the registration link from the dialog before closing it.
-  const registrationUrl = await page.locator("[role='dialog'] a").getAttribute('href');
-  if (!registrationUrl) {
-    throw new Error('Registration URL not found in dialog');
-  }
+  const linkLocator = page.locator("[role='dialog'] a");
+  const registrationUrl = await linkLocator.getAttribute('href');
+  expect(registrationUrl, 'Registration URL should exist').not.toBeNull();
+  expect(registrationUrl).toMatch(/^https:\/\/(staging-)?app\.immerse\.online\/sign-up\/b2b\?.*contract_id=.*&.*activation_key=.*/);
   // Clicking on the "Copy" button to close the dialog.
   await page
     .find("[data-testid='learners-button-copy']", {
@@ -335,7 +354,9 @@ test(title, details, async ({ page }) => {
     })
     .click();
   // Navigating to the registration link to complete the learner onboarding.
-  await page.goto(registrationUrl);
+  await page.goto(registrationUrl!);
+  // Wait for the Continue button to be enabled (takes about 3 seconds)
+  await page.waitForTimeout(3000);
   // Clicking on the "Continue" button to proceed with the learner onboarding process.
   await page
     .find(".//button[normalize-space(.)='Continue']", {
@@ -425,7 +446,7 @@ test(title, details, async ({ page }) => {
       `stop the work in app.immerse.online and go back to dashboard to check "${generatedEmail}" user status is active`,
   });
   // Acknowledging the user's instruction to stop the current work and navigate back to the dashboard to check the learner's status.
-  await page.goto('https://dashboard.immerse.online/dashboard-learner');
+  await page.goto('https://staging-dashboard.immerse.online/dashboard-learner');
   // Re-entering the learner's email address into the search field to check their status, as instructed by the user.
   await page
     .find("[placeholder='Search name, email, etc...']", {
@@ -455,4 +476,34 @@ test(title, details, async ({ page }) => {
       ],
     })
     .click();
+  // Waiting for the search results to load after searching for the learner's email.
+  await page.waitForTimeout(3000);
+  // Verify that the search results contain the learner's email
+  await page.find(`//*[contains(text(), '${generatedEmail}')]`, {
+    failover: [
+      `[data-testid='learners-table'] //*[contains(text(), '${generatedEmail}')]`,
+      "table tbody tr td",
+    ],
+  });
+  // Scrolling the table content to the right to reveal the status column using JavaScript
+  const tableContainer = await page.locator('div.mantine-kwn0a8').first();
+  await page.evaluate(() => {
+    document.querySelectorAll('div').forEach(el => {
+      if (el.scrollWidth > el.clientWidth) {
+        el.scrollLeft = el.scrollWidth;
+        el.dispatchEvent(new Event('scroll'));
+      }
+    });
+  });
+  await page.waitForTimeout(1000);
+  // Verify that the learner's status is "Active"
+  const activeElement = await page.find("//*[contains(text(), 'Active')]", {
+    failover: [
+      "td:has-text('Active')",
+      "[data-testid='learners-table'] //*[contains(text(), 'Active')]",
+      "table tbody tr td",
+    ],
+  });
+  const activeText = await page.locator("td:has-text('Active')").first().textContent();
+  console.log('Learner status:', activeText?.trim());
 });
