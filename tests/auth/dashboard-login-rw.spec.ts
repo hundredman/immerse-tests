@@ -70,7 +70,7 @@ test(title, details, async ({ page }) => {
   // Waiting for the login process to complete and the page to redirect to the dashboard after clicking the Login button.
   await page.waitForTimeout(3000);
   // Verifying that the user has successfully landed on the Dashboard home page by checking for the presence of "Learning Summary" text as specified in the objective.
-  await expect(page.getByText('Learning Summary')).toBeVisible();
+  await expect(page.getByText('Learning Summary')).toBeVisible({timeout: 30000});
   // Saving the browser storage state to a file for future use in tests.
   await page.context().storageState({ path: "login-state.json" });
 

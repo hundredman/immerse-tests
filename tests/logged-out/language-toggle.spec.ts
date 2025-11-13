@@ -21,46 +21,22 @@ const details = {
 };
 test(title, details, async ({ page }) => {
   // Initializing web navigation.
-  await page.goto('https://staging-dashboard.immerse.online/');
+  await page.goto('https://app.immerse.online/login');
   // Clicking the language dropdown to change the display language.
-  await page.clickElement({
-    selector: {
-      element: [
-        '#mantine-r0-target',
-        '#__next > div:nth-of-type(1) > div > div > div:nth-of-type(1) > div:nth-of-type(2)',
-        "[aria-label='Display Language']",
-        "(.//div[normalize-space(.)='ENGLISH'])[1]",
-        'div.css-18wbxrz',
-        'div.css-1a47ai3 > div:nth-of-type(2)',
-        'div.c-jhyvPY > div:nth-of-type(1) > div:nth-of-type(2)',
-        'div.c-gqwkJN > div > div:nth-of-type(1) > div:nth-of-type(2)',
-        'div.c-ejwOqd > div > div > div:nth-of-type(1) > div:nth-of-type(2)',
-        'html > body > div:nth-of-type(1) > div:nth-of-type(1) > div > div > div:nth-of-type(1) > div:nth-of-type(2)',
-        'body > div:nth-of-type(1) > div:nth-of-type(1) > div > div > div:nth-of-type(1) > div:nth-of-type(2)',
-        ".//div[normalize-space(.)='ENGLISH']",
-      ],
-      frame: null,
-    },
-  });
-  // Changing the display language to Japanese.
-  await page.clickElement({
-    selector: {
-      element: [
-        '#mantine-r0-dropdown > div > button:nth-of-type(2)',
-        '#__next > div:nth-of-type(1) > div > div > div:nth-of-type(1) > div:nth-of-type(3) > div > button:nth-of-type(2)',
+  await page
+    .find('#mantine-R4qaqm-target', {
+      failover: ["(.//div[normalize-space(.)='En'])[2]", 'div.css-1j0a71q'],
+    })
+    .click();
+  // Changing the language to Japanese by clicking on the '日本語' option in the language selection menu.
+  await page
+    .find('#mantine-R4qaqm-dropdown > div > button:nth-of-type(4)', {
+      failover: [
         ".//button[normalize-space(.)='日本語']",
-        'div.css-1a47ai3 > div:nth-of-type(3) > div > button:nth-of-type(2)',
-        'div.c-jhyvPY > div:nth-of-type(1) > div:nth-of-type(3) > div > button:nth-of-type(2)',
-        'div.c-gqwkJN > div > div:nth-of-type(1) > div:nth-of-type(3) > div > button:nth-of-type(2)',
-        'div.c-ejwOqd > div > div > div:nth-of-type(1) > div:nth-of-type(3) > div > button:nth-of-type(2)',
-        'body > div:nth-of-type(1) > div:nth-of-type(1) > div > div > div:nth-of-type(1) > div:nth-of-type(3) > div > button:nth-of-type(2)',
-        "[role='menuitem']",
-        "[data-menu-item='true']",
-        'button.mantine-Menu-item',
+        'html > body > div:nth-of-type(3) > div > div > div > button:nth-of-type(4)',
       ],
-      frame: null,
-    },
-  });
+    })
+    .click();
   // Asserting that the page content is now in Japanese.
   await page.assertPageText({
     text: 'ログイン',

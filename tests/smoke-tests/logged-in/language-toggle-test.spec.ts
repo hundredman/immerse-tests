@@ -99,6 +99,7 @@ test(title, details, async ({ page }) => {
   await expect(page.getByText('Estudiantes').first()).toBeVisible();
   // Navigating to the Learner details page to verify language swap.
   // Waiting for the table rows to load completely before verifying the language.
+  await page.locator('[data-testid="learners-table-no-results"]').waitFor({ state: 'hidden', timeout: 15000 });
   await page.waitForTimeout(4000);
   await page
     .find("[data-testid^='learners-table-row-']:nth-of-type(1)", {

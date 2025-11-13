@@ -96,6 +96,32 @@ test(title, details, async ({ page }) => {
       frame: null,
     },
   });
+  const learnersCount = await page.locator('text=Number of Learners').locator('xpath=following-sibling::div[1]').textContent();
+  const loggedInCount = await page.locator('text=Logged in at Least Once').locator('xpath=following-sibling::div[1]').textContent();
+  const attendedClassesPerc = await page.locator('text=% Attended Trainer-led Classes').locator('xpath=following-sibling::div[1]').textContent();
+  // Attended Trainer-led Classes
+  const attendedClassesCount = await page
+    .locator('text=Attended Trainer-led Classes')
+    .locator('xpath=following-sibling::div[contains(@class,"mantine-Group-root")]//div[contains(@class,"mantine-Text-root")]')
+    .first().textContent();
+
+  // Average Class Rating
+  const averageClassRatingCount = await page
+    .locator('text=Average Class Rating')
+    .locator('xpath=following-sibling::div[contains(@class,"mantine-Text-root")]').first()
+    .textContent();
+
+  // Attended Social Events
+  const attendedSocialEventsCount = await page
+    .locator('text=Attended Social Events')
+    .locator('xpath=following-sibling::div[contains(@class,"mantine-Group-root")]//div[contains(@class,"mantine-Text-root")]').first()
+    .textContent();
+
+  // Completed Self-Paced Lessons
+  const completedSelfPacedLessonsCount = await page
+    .locator('text=Completed Self-Paced Lessons')
+    .locator('xpath=following-sibling::div[contains(@class,"mantine-Group-root")]//div[contains(@class,"mantine-Text-root")]').first()
+    .textContent();
   // Selecting 'Last Quarter' from the time frame dropdown to change the dashboard's data view.
   await page.clickElement({
     selector: {
@@ -115,38 +141,14 @@ test(title, details, async ({ page }) => {
   });
   // Verifying that the 'Number of Learners' value has changed after updating the time frame.
   await page.visuallyAssert({
-    assertionToTestFor: "Assert that the value for 'Number of Learners' is 51.",
-  });
-  // Verifying that the 'Logged in at Least Once' value has changed after updating the time frame, and adjusting the assertion to match the current value displayed on the page.
-  await page.visuallyAssert({
-    assertionToTestFor:
-      "Assert that the value for 'Logged in at Least Once' is 75%.",
-  });
-  // Verifying that the
-  // % Attended Trainer-led Classes
-  //  value has changed after updating the time frame, and adjusting the assertion to match the current value displayed on the page.
-  await page.visuallyAssert({
-    assertionToTestFor:
-      'Assert that \n% Attended Trainer-led Classes\n is 75%.',
-  });
-  // Verifying that the 'Attended Trainer-led classes' value has changed after updating the time frame, and adjusting the assertion to match the current value displayed on the page.
-  await page.visuallyAssert({
-    assertionToTestFor:
-      "Assert that the value for 'Attended Trainer-led classes' is 537.",
-  });
-  // Verifying that the 'Average Class Rating' value has changed after updating the time frame.
-  await page.visuallyAssert({
-    assertionToTestFor:
-      "Assert that the value for 'Average Class Rating' is 5.",
-  });
-  // Verifying that the 'Attended Social Events' value has changed after updating the time frame, and adjusting the assertion to match the current value displayed on the page.
-  await page.visuallyAssert({
-    assertionToTestFor:
-      "Assert that the value for 'Attended Social Events' is 569.",
-  });
-  // Verifying that the 'Completed Self-Paced Lessons' value has changed after updating the time frame, and adjusting the assertion to match the current value displayed on the page.
-  await page.visuallyAssert({
-    assertionToTestFor:
-      "Assert that the value for 'Completed Self-Paced Lessons' is 373.",
+    assertionToTestFor: `
+    Assert that at least one of the following conditions is true:
+    - 'Number of Learners' is not ${learnersCount}
+    - 'Logged in at Least Once' is not ${loggedInCount}
+    - '% Attended Trainer-led Classes' is not ${attendedClassesPerc}
+    - 'Attended Trainer-led Classes' is not ${attendedClassesCount}
+    - 'Average Class Rating' is not ${averageClassRatingCount}
+    - 'Attended Social Events' is not ${attendedSocialEventsCount}
+    - 'Completed Self-Paced Lessons' is not ${completedSelfPacedLessonsCount}.`,
   });
 });

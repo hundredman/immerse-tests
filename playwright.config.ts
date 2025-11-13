@@ -3,7 +3,7 @@ import { defineConfig, devices } from "donobu";
 export default defineConfig({
   testDir: "./tests",
   workers: 4,
-  retries: process.env.CI ? 2 : 1,
+  retries: 1,
   projects: [
     {
       name: "dashboard-login-rw",

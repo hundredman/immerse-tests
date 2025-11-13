@@ -39,6 +39,7 @@ Verify landing at the completed onboarding page
   ],
 };
 test(title, details, async ({ page }) => {
+  await page.waitForTimeout(10000)
   // Generate a unique email address for this test run
   const randomString = Math.random().toString(36).substring(2, 12);
   const generatedEmail = `test.learner+${randomString}@immerse.online`;
@@ -103,6 +104,11 @@ test(title, details, async ({ page }) => {
       ],
     })
     .click();
+  // Wait for add Learner button
+  await page.locator('//button[normalize-space(.)="Add Learners"]').waitFor({ 
+  state: 'visible', 
+  timeout: 5000 
+});
   // Clicking on the 'Add Learners' button to initiate the process of adding a new learner.
   await page
     .find(".//button[normalize-space(.)='Add Learners']", {

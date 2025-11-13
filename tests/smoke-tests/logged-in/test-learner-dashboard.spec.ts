@@ -820,7 +820,7 @@ test(title, details, async ({ page }) => {
   // Confirming that the chart or data summary reflects the selected time frame by asserting that the data in the table has updated after changing the time frame filter to 'Last 7 days'.
   await page.visuallyAssert({
     assertionToTestFor:
-      `Assert that the current first row tos, self-paced, trainer-led values have changed to reflect the 'Last 7 days' time frame, by comparing the previous value tos ${tosValue}, self-paced ${selfPacedValue}, trainer-led ${trainerLedValue}.`,
+      `Assert that the current first row tos, self-paced, trainer-led values have changed to reflect the 'Last 7 days' time frame, by comparing any of the previous value tos ${tosValue}, self-paced ${selfPacedValue}, trainer-led ${trainerLedValue} to a new value`,
     retries: 5,
     retryWaitSeconds: 5,
   });

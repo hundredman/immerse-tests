@@ -3,11 +3,12 @@
     "version": "1.0.0",
     "description": "Playwright-based website tests made with Donobu",
     "scripts": {
-        "test": "npx playwright test"
+        "test": "npx playwright test",
+        "test:headed": "npx playwright test --headed"
     },
     "devDependencies": {
         "@playwright/test": "1.53.2",
-        "donobu": "^2.44.0",
+        "donobu": "^2.49.0",
         "playwright": "1.53.2"
     }
 }
