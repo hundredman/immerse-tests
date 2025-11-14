@@ -559,16 +559,16 @@ test(title, details, async ({ page }) => {
       ],
     })
     .click();
-  // Selecting '42225 Contract - IMMERSE Pro' from the contract filter dropdown to verify filtering works with search, as required by the overall objective.
+  // Selecting 'immerse-demo-contract - IMMERSE Pro' from the contract filter dropdown to verify filtering works with search, as required by the overall objective.
   await page
     .find('#mantine-r3-dropdown > div > button:nth-of-type(1)', {
       failover: [
-        ".//button[normalize-space(.)='42225 Contract - IMMERSE Pro']",
-        'div.mantine-7khlmp > div:nth-of-type(1) > div > div > button:nth-of-type(1)',
-        'div.mantine-1hv2vg > div:nth-of-type(1) > div:nth-of-type(1) > div > div > button:nth-of-type(1)',
-        'div.mantine-1ywgif7 > div > div:nth-of-type(1) > div:nth-of-type(1) > div > div > button:nth-of-type(1)',
-        'div.mantine-le2skq > div:nth-of-type(2) > div > div:nth-of-type(1) > div:nth-of-type(1) > div > div > button:nth-of-type(1)',
-        'body > div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div:nth-of-type(1) > div:nth-of-type(1) > div > div > button:nth-of-type(1)',
+        ".//button[normalize-space(.)='immerse-demo-contract - IMMERSE Pro']",
+        'div.mantine-7khlmp > div:nth-of-type(1) > div > div > button:nth-of-type(4)',
+        'div.mantine-1hv2vg > div:nth-of-type(1) > div:nth-of-type(1) > div > div > button:nth-of-type(4)',
+        'div.mantine-1ywgif7 > div > div:nth-of-type(1) > div:nth-of-type(1) > div > div > button:nth-of-type(4)',
+        'div.mantine-le2skq > div:nth-of-type(2) > div > div:nth-of-type(1) > div:nth-of-type(1) > div > div > button:nth-of-type(4)',
+        'body > div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div:nth-of-type(1) > div:nth-of-type(1) > div > div > button:nth-of-type(4)',
         "[role='menuitem']",
         "[data-menu-item='true']",
         'button.mantine-Menu-item',
@@ -614,10 +614,10 @@ test(title, details, async ({ page }) => {
   await page.waitForSelector('[data-testid="learners-table"]', { state: 'visible' });
   await page.locator('[data-testid="learners-table-no-results"]').waitFor({ state: 'hidden', timeout: 15000 });
   await page.waitForLoadState('networkidle');
-  // Verifying that both the contract filter and search term apply in combination by asserting that the table contains 'Sample Manager' and that the contract displayed is '42225 Contract - IMMERSE Pro'.
+  // Verifying that both the contract filter and search term apply in combination by asserting that the table contains 'Sample Manager' and that the contract displayed is 'immerse-demo-contract - IMMERSE Pro'.
   await page.visuallyAssert({
     assertionToTestFor:
-      "Assert that the table contains 'Sample Manager' and that the contract displayed is '42225 Contract - IMMERSE Pro'.",
+      "Assert that the table contains 'Sample Manager' and that the contract displayed is 'immerse-demo-contract - IMMERSE Pro'.",
     retries: 5,
     retryWaitSeconds: 5,
   });
@@ -857,7 +857,7 @@ test(title, details, async ({ page }) => {
   // Analyzing the text content of the Learner Data Tray to check for relevant learner details (name, email, contract, manager, etc.) as required by the overall objective.
   const detailsDialog = await page.locator('//div[contains(@class, "mantine-Paper-root mantine-Drawer-drawer")]')
   await expect(detailsDialog).toBeVisible();
-  await detailsDialog.getByText('Progress', { exact: true }).waitFor({ state: 'visible' , timeout: 15000 });
+  await detailsDialog.getByText('Progress', { exact: true }).waitFor({ state: 'visible', timeout: 15000 });
   await expect(detailsDialog.getByText('Progress', { exact: true })).toBeVisible();
   await expect(detailsDialog.getByText('Time on Site', { exact: true })).toBeVisible();
   await expect(detailsDialog.getByText('Activities Complete', { exact: true })).toBeVisible();
