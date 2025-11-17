@@ -1,3 +1,13 @@
+/**
+ * Note that this test uses tools that require the usage of an LLM, so be
+ * sure to have an appropriate LLM API key available. This can be done
+ * by providing an environment variable (e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY,
+ * or GOOGLE_GENERATIVE_AI_API_KEY) when running the test...
+ *
+ *    Example: `OPENAI_API_KEY=YOUR_KEY npx playwright test`
+ *
+ * ...or by configuring a flow runner using the Donobu app.
+ */
 import { test, expect } from 'donobu';
 
 const title = 'Test for https://dashboard.immerse.online';
@@ -493,4 +503,47 @@ test(title, details, async ({ page }) => {
   const activeText = await page.locator("td:has-text('Active')").first().textContent();
   expect(activeText).toBe('Active');
   console.log('Learner status:', activeText?.trim());
+
+  // Cleanup: Make the created learner inactive to free up the license
+  await page.run('acknowledgeUserInstruction', {
+    userInstruction: `Make the learner "${generatedEmail}" inactive to free up the license`,
+  });
+
+  // Click on the "..." button to reveal options for the learner
+  await page
+    .find(".//button[normalize-space(.)='...']", {
+      failover: [
+        "td:nth-of-type(14) > [data-button='true']",
+        'td:nth-of-type(14) > button.mantine-UnstyledButton-root',
+        "[data-testid='learners-table-cell-edit-235514'] > button",
+        'div.mantine-kwn0a8 > table > tbody > tr > td:nth-of-type(14) > button',
+        "[data-testid='learners-table-row-235514'] > td:nth-of-type(14) > button",
+        "[data-testid='learners-table'] > tbody > tr > td:nth-of-type(14) > button",
+        'div.mantine-1hv2vg > div:nth-of-type(3) > table > tbody > tr > td:nth-of-type(14) > button',
+        'div.mantine-1ywgif7 > div > div:nth-of-type(3) > table > tbody > tr > td:nth-of-type(14) > button',
+        'body > div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div:nth-of-type(3) > table > tbody > tr > td:nth-of-type(14) > button',
+        "[data-button='true']",
+        'button.mantine-UnstyledButton-root',
+      ],
+    })
+    .click();
+
+  // Click on "Make Inactive" option from the menu
+  await page
+    .find(".//button[normalize-space(.)='Make Inactive']", {
+      failover: [
+        "[data-testid='learners-edit-menu-item-make-inactive']",
+        ".//button[contains(normalize-space(.), 'Make Inactive')]",
+        ".//button[contains(normalize-space(.), 'Inactive')]",
+        "[role='menuitem']",
+        "[data-menu-item='true']",
+        'button.mantine-Menu-item',
+      ],
+    })
+    .click();
+
+  // Verify that the learner was made inactive by checking for success message
+  await page.locator("[role='alert']").filter({ hasText: 'Learner Made Inactive' }).first().waitFor({ state: 'visible', timeout: 5000 });
+
+  console.log(`Learner ${generatedEmail} has been made inactive to free up the license`);
 });
