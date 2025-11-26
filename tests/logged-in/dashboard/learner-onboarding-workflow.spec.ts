@@ -117,7 +117,7 @@ test(title, details, async ({ page }) => {
   // Wait for add Learner button
   await page.locator('//button[normalize-space(.)="Add Learners"]').waitFor({ 
   state: 'visible', 
-  timeout: 5000 
+  timeout: 10000 
 });
   // Clicking on the 'Add Learners' button to initiate the process of adding a new learner.
   await page

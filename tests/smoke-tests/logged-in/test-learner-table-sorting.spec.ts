@@ -198,16 +198,10 @@ test(title, details, async ({ page }) => {
     await page.locator('[data-testid="learners-table-no-results"]').waitFor({ state: 'hidden', timeout: 30000 });
     await page.waitForTimeout(3000);
     // Extracting all Email values from the table to verify that they are sorted in reverse alphanumeric order (Z → A).
-    await page.analyzePageText({
-        analysisToRun:
-            "Extract all the text content from the 'Email' column of the learner table. The emails are in the second column of the table, after the Name column. Each row starts with a tab character and the email is the third tab-separated field (index 2).",
-        additionalRelevantContext:
-            'The table rows are identified by data-testid="learners-table-row-...". The email is the second text element in each row.',
-    });
-    // Verifying that the extracted Email values are sorted in reverse alphanumeric order (Z → A).
-    await page.visuallyAssert({
-        assertionToTestFor: "Assert that the list of emails is sorted in strictly descending lexicographic (dictionary) order, comparing each email as a plain text string character by character. Do not interpret numeric parts as numbers; for example, 'sample.6@' should come before 'sample.10@' if compared as strings.",
-    });
+    let emailValues = await page.locator('[data-testid^="learners-table-cell-email-"]').allTextContents();
+    const sortedDescending = [...emailValues].sort().reverse();
+    await expect(emailValues).toEqual(sortedDescending);
+
     // Clicking on the Email column header to sort the table in ascending order.
     await page
         .find("[data-testid='learners-table-header-email']", {
@@ -227,16 +221,9 @@ test(title, details, async ({ page }) => {
     await page.locator('[data-testid="learners-table-no-results"]').waitFor({ state: 'hidden', timeout: 30000 });
     await page.waitForTimeout(3000);
     // Extracting all Email values from the table to verify that they are sorted alphanumerically by email ID (A → Z).
-    await page.analyzePageText({
-        analysisToRun:
-            "Extract all the text content from the 'Email' column of the learner table. The emails are in the second column of the table, after the Name column. Each row starts with a tab character and the email is the third tab-separated field (index 2)",
-        additionalRelevantContext:
-            'The table rows are identified by data-testid="learners-table-row-...". The email is the second text element in each row.',
-    });
-    await page.visuallyAssert({
-        assertionToTestFor:
-            "Assert that the list of emails is sorted in strictly ascending lexicographic (dictionary) order, comparing each email as a plain text string character by character. Do not interpret numeric parts as numbers; for example, 'sample.10@' should come before 'sample.6@' if compared as strings.",
-    });
+    emailValues = await page.locator('[data-testid^="learners-table-cell-email-"]').allTextContents();
+    const sortedAscending = [...emailValues].sort();
+    await expect(emailValues).toEqual(sortedAscending);
     // Clicking on the Location column header to sort the table in descending order.
     await page
         .find("[data-testid='learners-table-header-location']", {
