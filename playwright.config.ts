@@ -40,6 +40,13 @@ export default defineConfig({
       },
     },
     {
+      name: "d2c-login",
+      testMatch: "tests/auth/d2c-login.spec.ts",
+      metadata: {
+        SELF_HEAL_TESTS_ENABLED: false,
+      },
+    },
+    {
       name: "b2b-smoke-test-login",
       testMatch: "tests/smoke-tests/b2b-login-smoke-test.spec.ts",
       metadata: {
@@ -68,9 +75,19 @@ export default defineConfig({
     {
       name: "logged-in-tests",
       testMatch: "tests/logged-in/**/*.spec.ts",
-      testIgnore: "tests/logged-in/dashboard/learner-onboarding-workflow.spec.ts",
+      testIgnore: [
+        "tests/logged-in/dashboard/learner-onboarding-workflow.spec.ts",
+        "tests/logged-in/dashboard/d2c-schedule-workflow.spec.ts",
+        "tests/logged-in/dashboard/d2c-nvidia-launch-workflow.spec.ts"
+      ],
       dependencies: ["dashboard-login"],
       use: { storageState: "login-state.json" },
+    },
+    {
+      name: "d2c-logged-in-tests",
+      testMatch: "tests/logged-in/dashboard/d2c-*.spec.ts",
+      dependencies: ["d2c-login"],
+      use: { storageState: "d2c-login-state.json" },
     },
     {
       name: "logged-in-smoke-tests",
