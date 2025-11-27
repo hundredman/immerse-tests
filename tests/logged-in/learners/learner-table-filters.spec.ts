@@ -23,6 +23,7 @@ test(title, details, async ({ page }) => {
   // Initializing web navigation.
   await page.goto('https://staging-dashboard.immerse.online/dashboard');
   // Clicking on the 'Learners' tab to navigate to the learners page.
+  await page.getByRole("button", { name: "Learners" }).waitFor({ state: "visible" , timeout: 10000 });
   await page
     .find("[data-testid='layout-header-learners-button']", {
       failover: [
