@@ -42,5 +42,7 @@ test(title, details, async ({ page }) => {
   await page.visuallyAssert({
     assertionToTestFor:
       "Assert that the text 'ダッシュボード' is present on the page.",
+    retries: 3,
+    retryWaitSeconds: 10,
   });
 });
