@@ -18,6 +18,9 @@ Verify landing at the home page for d2c learners`
 test(title, details, async ({ page, context }) => {
   // Initializing web navigation.
   await page.goto('https://app.immerse.online/login');
+  // Wait for the login page to load
+  await page.getByRole('heading', { name: 'Log In' }).waitFor({ state: 'visible', timeout: 90000 });
+  await page.waitForTimeout(10000);
 
   // Entering the user's email address as part of the login process.
   await page
