@@ -70,7 +70,7 @@ export default defineConfig({
       name: "logged-in-tests",
       testMatch: "tests/logged-in/dashboard/learner-onboarding-workflow.spec.ts",
       dependencies: ["dashboard-login-rw"],
-      use: { storageState: "login-state.json" },
+      use: { storageState: "rw-login-state.json" },
     },
     {
       name: "logged-in-tests",

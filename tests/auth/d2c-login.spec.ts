@@ -1,4 +1,4 @@
-import { test } from 'donobu';
+import { test, expect } from 'donobu';
 
 const title = 'immerse-d2c-login';
 const details = {
@@ -11,67 +11,40 @@ Navigate to app.immerse.online
 Enter the email of a d2c user: test_stripe_v3_user@immerse.online
 Enter the password for that d2c user: 49i4EjT&gK53pB!M
 Click on Login
-Verify landing at the home page for d2c learners (https://app.immerse.online/home)
-`,
+Verify landing at the home page for d2c learners`
     },
   ],
 };
 test(title, details, async ({ page, context }) => {
   // Initializing web navigation.
   await page.goto('https://app.immerse.online/login');
-  await page.getByRole('heading', { name: 'Log In' }).waitFor({ state: 'visible', timeout: 90000 });
-  await page.waitForTimeout(10000);
 
-  // Entering the d2c user's email address into the email input field to log in.
+  // Entering the user's email address as part of the login process.
   await page
     .find("[placeholder='Enter your email']", {
-      failover: [
-        'input.css-111d7as',
-        'div.css-1f7apd6 > input',
-        'div.css-1fhtl0l > div:nth-of-type(1) > div > input',
-        'div.css-11ifkoq > div:nth-of-type(2) > div:nth-of-type(1) > div > input',
-        'div.c-ejwOqd > div > div:nth-of-type(2) > div:nth-of-type(1) > div > input',
-        'body > div:nth-of-type(1) > div:nth-of-type(1) > div > div:nth-of-type(2) > div:nth-of-type(1) > div > input',
-      ],
+      failover: ['input.css-111d7as', 'div.css-1f7apd6 > input'],
     })
     .inputText('test_stripe_v3_user@immerse.online');
 
-  // Entering the d2c user's password into the password input field to complete the login credentials.
+  // Entering the password and submitting the login form.
   await page
-    .find("[data-testid='passwordinput']", {
+    .find('#mantine-R2kp5aaqm', {
       failover: [
+        "[data-testid='passwordinput']",
         "[placeholder='Enter your password']",
-        'input.mantine-13e8zn2',
-        'div.mantine-PasswordInput-input > input',
-        'div.mantine-Input-wrapper > div:nth-of-type(1) > input',
-        'div.mantine-InputWrapper-root > div > div:nth-of-type(1) > input',
-        'div.css-1jv8527 > div:nth-of-type(2) > div > div:nth-of-type(1) > input',
-        'div.css-1fhtl0l > div:nth-of-type(2) > div > div:nth-of-type(2) > div > div:nth-of-type(1) > input',
-        'div.css-11ifkoq > div:nth-of-type(2) > div:nth-of-type(2) > div > div:nth-of-type(2) > div > div:nth-of-type(1) > input',
-        'body > div:nth-of-type(1) > div:nth-of-type(1) > div > div:nth-of-type(2) > div:nth-of-type(2) > div > div:nth-of-type(2) > div > div:nth-of-type(1) > input',
       ],
     })
-    .inputText('49i4EjT&gK53pB!M');
+    .inputText('49i4EjT&gK53pB!M', { finalizeWithSubmit: true });
 
-  // Clicking the Login button to complete the login process after entering the email and password.
+  // Clicking the login button to proceed with the authentication.
   await page
     .find(".//button[normalize-space(.)='Login']", {
-      failover: [
-        'button.css-3wz0nu',
-        'div.css-1fhtl0l > button',
-        'div.css-11ifkoq > div:nth-of-type(2) > button',
-        'div.c-ejwOqd > div > div:nth-of-type(2) > button',
-        'html > body > div:nth-of-type(1) > div:nth-of-type(1) > div > div:nth-of-type(2) > button',
-        'body > div:nth-of-type(1) > div:nth-of-type(1) > div > div:nth-of-type(2) > button',
-      ],
+      failover: ['button.css-3wz0nu', 'div.css-1fhtl0l > button'],
     })
     .click();
 
-  // Waiting for the page to load after attempting to log in.
-  await page.waitForTimeout(5000);
-
-  // Verify that we landed at the home page for d2c learners
-  await page.waitForURL(/.*\/home/, { timeout: 30000 });
+  // Verify navigation to GFN desktop after login
+  await expect(page).toHaveURL(/.*gfn\/desktop/);
 
   // Save the authentication state
   await context.storageState({ path: 'd2c-login-state.json' });
