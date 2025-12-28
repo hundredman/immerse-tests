@@ -76,3 +76,8 @@ jobs:
           body: "Fix failing Playwright tests"
           branch: fix-playwright-tests-for-${{ github.ref_name }}
           base: ${{ github.ref_name }}
+
+      # Fail the workflow if tests failed
+      - name: Check test results
+        if: steps.run_tests.outcome == 'failure'
+        run: exit 1
