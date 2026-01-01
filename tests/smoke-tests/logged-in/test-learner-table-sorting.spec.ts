@@ -394,6 +394,8 @@ test(title, details, async ({ page }) => {
     await page.visuallyAssert({
         assertionToTestFor:
             "Assert that the following list of 'Start' values is sorted in increasing order (lowest → highest). If all values are identical, consider it valid and pass the check, since identical entries inherently satisfy the sorted condition.",
+        retries: 3,
+        retryWaitSeconds: 5,
     });
     // Clicking on the Current column header to sort in descending order.
     await page
