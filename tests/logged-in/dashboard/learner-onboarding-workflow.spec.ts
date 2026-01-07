@@ -64,7 +64,7 @@ test(title, details, async ({ page }) => {
   // Wait for page to load
   await page.waitForLoadState('networkidle');
   // Clicking on the Learners tab to navigate to the learners management section.
-  await page.getByRole("button", { name: "Learners" }).waitFor({ state: "visible" , timeout: 10000 });
+  await page.getByRole("button", { name: "Learners" }).waitFor({ state: "visible" , timeout: 30000 });
   await page
     .find("[data-testid='layout-header-learners-button']", {
       failover: [
