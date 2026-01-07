@@ -1,6 +1,10 @@
 name: Run Playwright Tests
 
 on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'tests/**/*.spec.ts'  # Only trigger when test files change
   pull_request:
   schedule:
     - cron: "15 13 * * *" # Runs daily at 13:15 UTC
